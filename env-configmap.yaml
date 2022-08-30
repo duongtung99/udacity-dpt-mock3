@@ -5,5 +5,5 @@ metadata:
 data:
  AWS_REGION: us-east-1
  AWS_PROFILE: default
- URL: http://localhost:8100
+ URL: http://aaea197de4efe44928c45c92ffd2c065-990302672.us-east-1.elb.amazonaws.com
  AWS_BUCKET: udacity-bucket-mock3
