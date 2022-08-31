@@ -5,7 +5,7 @@ metadata:
     app: backend-feed
   name: backend-feed
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: backend-feed
@@ -15,15 +15,15 @@ spec:
         app: backend-feed
     spec:
       containers:
-      - image: dptung2599/udagram-api-feed:v1
+      - image: dptung2599/udagram-api-feed:v4
         name: backend-feed
         imagePullPolicy: Always  
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "250m"
+            memory: "512Mi"
+            cpu: "500m"
           limits:
-            memory: "1024Mi"
+            memory: "2048Mi"
             cpu: "500m"                  
         env:
         - name: URL
@@ -51,24 +51,32 @@ spec:
             secretKeyRef:
               name: env-secret
               key: JWT_SECRET
-        - name: POSTGRESS_DB
+        - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
               name: env-secret
               key: POSTGRES_DB
-        - name: POSTGRESS_HOST
+        - name: POSTGRES_HOST
           valueFrom:
             secretKeyRef:
               name: env-secret
               key: POSTGRES_HOST
-        - name: POSTGRESS_PASSWORD
+        - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: env-secret
               key: POSTGRES_PASSWORD
-        - name: POSTGRESS_USERNAME
+        - name: POSTGRES_USERNAME
           valueFrom:
             secretKeyRef:
               name: env-secret
               key: POSTGRES_USERNAME           
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true        
       restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret  

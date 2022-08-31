@@ -14,12 +14,11 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
   console.debug("Initialize database connection...");
   await sequelize.sync();
-
+  console.log(`aws: ${config.aws_media_bucket}`);
   const app = express();
   const port = process.env.PORT || 8080;
 
   app.use(bodyParser.json());
-
   // We set the CORS origin to * so that we don't need to
   // worry about the complexities of CORS this lesson. It's
   // something that will be covered in the next course.
@@ -45,6 +44,7 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
   // Start the Server
   app.listen( port, () => {
     console.log( `server running ${config.url}` );
+    console.log( `server running ${config.aws_media_bucket}` );
     console.log( `press CTRL+C to stop server` );
   } );
 })();
