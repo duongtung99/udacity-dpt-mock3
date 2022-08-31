@@ -14,7 +14,6 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
   console.debug("Initialize database connection...");
   await sequelize.sync();
-  console.log(`aws: ${config.aws_media_bucket}`);
   const app = express();
   const port = process.env.PORT || 8080;
 
@@ -30,7 +29,7 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
     preflightContinue: true,
-    origin: '*',
+    origin: config.url,
   }));
 
   app.use('/api/v0/', IndexRouter);
@@ -46,5 +45,7 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
     console.log( `server running ${config.url}` );
     console.log( `server running ${config.aws_media_bucket}` );
     console.log( `press CTRL+C to stop server` );
+    console.log(`aws: ${config.aws_media_bucket}`);
+    console.log(`aws: ${config.host}`);
   } );
 })();
